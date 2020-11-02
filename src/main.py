@@ -18,9 +18,9 @@ else:
     data_dir = os.path.dirname(os.path.abspath(__file__))
     user_dir = Path.home()
 import locale
-locale.setlocale(locale.LC_ALL, '')
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
-__version__ = "0.9"
+__version__ = "0.9.5"
 
 
 class AttgenApp(App):

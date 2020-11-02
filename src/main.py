@@ -17,7 +17,8 @@ else:
     from pathlib import Path
     data_dir = os.path.dirname(os.path.abspath(__file__))
     user_dir = Path.home()
-
+import locale
+locale.setlocale(locale.LC_ALL, '')
 
 __version__ = "0.9"
 

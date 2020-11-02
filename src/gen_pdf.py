@@ -63,7 +63,7 @@ def generer_pdf(save_dir, data, motif, urgence=False):
         except ValueError:
             delta = 0
         instant = instant - timedelta(minutes=delta)
-    date = instant.strftime("%d %B %Y")
+    date = instant.strftime("%d/%m/%Y")
     data['date'] = date
     heure = instant.strftime("%H:%M")
     data['heure'] = heure

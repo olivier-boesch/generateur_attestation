@@ -1,0 +1,172 @@
+#:import motifs_courts gen_pdf.motifs_courts
+#:import __version__ main.__version__
+
+BoxLayout:
+    orientation: 'vertical'
+    padding: 20
+    spacing: 10
+    cur_motif: 0
+    Label:
+        text: 'Générateur d\'attestation'
+    ToggleButton:
+        id: motif0
+        text: motifs_courts[0]
+        group: "motif"
+        on_state: if self.state == 'down': root.cur_motif = 0
+    ToggleButton:
+        id: motif1
+        text: motifs_courts[1]
+        group: "motif"
+        on_state: if self.state == 'down': root.cur_motif = 1
+    ToggleButton:
+        id: motif2
+        text: motifs_courts[2]
+        group: "motif"
+        on_state: if self.state == 'down': root.cur_motif = 2
+    ToggleButton:
+        id: motif3
+        text: motifs_courts[3]
+        group: "motif"
+        on_state: if self.state == 'down': root.cur_motif = 3
+    ToggleButton:
+        id: motif4
+        text: motifs_courts[4]
+        group: "motif"
+        on_state: if self.state == 'down': root.cur_motif = 4
+    ToggleButton:
+        id: motif5
+        text: motifs_courts[5]
+        group: "motif"
+        on_state: if self.state == 'down': root.cur_motif = 5
+    ToggleButton:
+        id: motif6
+        text: motifs_courts[6]
+        group: "motif"
+        on_state: if self.state == 'down': root.cur_motif = 6
+    ToggleButton:
+        id: motif7
+        text: motifs_courts[7]
+        group: "motif"
+        on_state: if self.state == 'down': root.cur_motif = 7
+    ToggleButton:
+        id: motif8
+        text: motifs_courts[8]
+        group: "motif"
+        on_state: if self.state == 'down': root.cur_motif = 8
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 5
+        Button:
+            text: 'Générer'
+            background_color: 0,1.0,0,1
+            on_release: app.generer()
+        Button:
+            text: 'Réglages'
+            on_release: app.show_settings_popup()
+        Button:
+            text: 'À propos'
+            on_release: app.show_about()
+        Button:
+            text: 'Help !'
+            background_color: 1.0,0,0,1
+            on_release: app.generer_urgence()
+
+<SettingsPopup@Popup>
+    title: "Réglages / Préférences"
+    on_dismiss: app.on_dismiss_settings_popup(self)
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+        Label:
+            text: '-- Informations --'
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Nom:'
+            TextInput:
+                id: nom
+                multiline: False
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Prénom:'
+            TextInput:
+                id: prenom
+                multiline: False
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Date de naissance:'
+            TextInput:
+                id: date_naissance
+                multiline: False
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'commune de naissance:'
+            TextInput:
+                id: lieu_naissance
+                multiline: False
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Adresse:'
+            TextInput:
+                id: adresse
+                multiline: False
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Code Postal:'
+            TextInput:
+                id: code_postal
+                multiline: False
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Ville:'
+            TextInput:
+                id: commune
+                multiline: False
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Motif par défaut'
+            Spinner:
+                id: motif_defaut
+                text: ""
+                values: motifs_courts
+        Label:
+            text: '-- Bouton \"Help!\" --'
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Motif:'
+            Spinner:
+                id: motif_help
+                text: ""
+                values: motifs_courts
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Reculer l\'heure de (min):'
+            TextInput:
+                id: decalage_help
+                multiline: False
+        Button:
+            text: 'Enregistrer'
+            on_release: root.dismiss()
+
+<AboutPopup@Popup>
+    title: "À propos"
+    size_hint: 0.7, 0.7
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            markup: True
+            text: "Générateur d\'attestation v.{:s}\nOlivier Boesch © 2020\nAucune donnée n'est envoyée.\n [ref=link][u]voir le code[/u][/ref]".format(__version__)
+            on_ref_press: import webbrowser; webbrowser.open("https://github.com/olivier-boesch/generateur_attestation")
+        Button:
+            text: 'Fermer'
+            size_hint_y: 0.2
+            on_release: root.dismiss()

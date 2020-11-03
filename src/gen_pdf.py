@@ -67,11 +67,11 @@ def generer_pdf(save_dir, data, motif, urgence=False):
     if platform == 'android':
         mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
                 'août', 'septembre', 'octobre', 'novembre', 'décembre']
+        date = instant.strftime("%d ").lstrip('0')
         date += mois[int(instant.strftime("%m"))]
-        date = instant.strftime("%d ")
         date += instant.strftime(" %Y")
     else:
-        date = instant.strftime("%d %B %Y")
+        date = instant.strftime("%d %B %Y").lstrip('0')
     data['date'] = date
     heure = instant.strftime("%H:%M")
     data['heure'] = heure

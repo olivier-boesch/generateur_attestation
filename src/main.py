@@ -10,7 +10,7 @@ from kivy import platform
 if platform == 'android':
     from android.permissions import request_permissions, Permission
     from android.storage import primary_external_storage_path, app_storage_path
-    import android
+    from android import loadingscreen
     data_dir = app_storage_path()
     user_dir = primary_external_storage_path()
 else:
@@ -98,6 +98,7 @@ class AttgenApp(App):
     def on_start(self):
         self.load_data()
         self.root.ids['motif'+str(self.data['motif_defaut'])].state = 'down'
+        loadingscreen.hide_loading_screen()
 
     def on_stop(self):
         self.save_data()

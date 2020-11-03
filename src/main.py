@@ -17,8 +17,8 @@ else:
     from pathlib import Path
     data_dir = os.path.dirname(os.path.abspath(__file__))
     user_dir = Path.home()
-#import locale
-#locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+    import locale
+    locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
 __version__ = "0.9.5"
 
@@ -98,6 +98,7 @@ class AttgenApp(App):
     def on_start(self):
         self.load_data()
         self.root.ids['motif'+str(self.data['motif_defaut'])].state = 'down'
+        Logger.info('Locales: '+str(locale.locale_alias))
 
     def on_stop(self):
         self.save_data()

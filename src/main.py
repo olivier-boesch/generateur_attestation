@@ -20,7 +20,7 @@ else:
     import locale
     locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
-__version__ = "0.9.5"
+__version__ = "0.9.8"
 
 
 class AttgenApp(App):

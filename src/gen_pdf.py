@@ -4,14 +4,15 @@ from collections import OrderedDict
 from datetime import datetime, timedelta
 from fpdf import FPDF
 import os.path
+from kivy import platform
 
 title = "ATTESTATION DE DÉPLACEMENT DÉROGATOIRE"
 
 prelude = "En application du décret n°2020-1310 du 29 octobre 2020 prescrivant les mesures générales nécessaires pour " \
           "faire face à l'épidémie de Covid19 dans le cadre de l'état d'urgence sanitaire "
 
-debut = u"Je soussigné(e),\nMme/M {nom:s} {prenom:s}\nné(e) le : {date_naissance:s} à {lieu_naissance:s}\nDeumeurant : {" \
-        "adresse:s} {code_postal:s} {commune:s}\ncertifie que mon déplacement est lié au motif suivant autorisé par " \
+debut = u"Je soussigné(e),\n\nMme/M {nom:s} {prenom:s}\n\nné(e) le : {date_naissance:s} à {lieu_naissance:s}\n\nDeumeurant : {" \
+        "adresse:s} {code_postal:s} {commune:s}\n\ncertifie que mon déplacement est lié au motif suivant autorisé par " \
         "le décret n°2020-1310 du 29 octobre 2020 prescrivant les mesures générales nécessaires pour faire face à " \
         "l'épidémie de Covid19 dans le cadre de l'état d'urgence sanitaire  : "
 
@@ -45,7 +46,7 @@ motifs = OrderedDict([
         ("École et périscolaire", "Déplacement pour chercher les enfants à l'école et à l'occasion de leurs activités "
                                   "périscolaires;")])
 
-fin = "Fait à {commune:s}\nle : {date:s} à {heure:s}"
+fin = "Fait à {commune:s}\n\nle : {date:s} à {heure:s}"
 
 motifs_courts = list(motifs.keys())
 motifs_longs = [motifs[k] for k in motifs.keys()]
@@ -63,7 +64,14 @@ def generer_pdf(save_dir, data, motif, urgence=False):
         except ValueError:
             delta = 0
         instant = instant - timedelta(minutes=delta)
-    date = instant.strftime("%d/%m/%Y")
+    if platform == 'android':
+        mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
+                'août', 'septembre', 'octobre', 'novembre', 'décembre']
+        date += mois[int(instant.strftime("%m"))]
+        date = instant.strftime("%d ")
+        date += instant.strftime(" %Y")
+    else:
+        date = instant.strftime("%d %B %Y")
     data['date'] = date
     heure = instant.strftime("%H:%M")
     data['heure'] = heure
@@ -87,8 +95,9 @@ def generer_pdf(save_dir, data, motif, urgence=False):
         pdf.ln()
     pdf.multi_cell(0, 5, footer)
     pdf.ln()
-    pdf.output(name=os.path.join(save_dir, instant.strftime("%Y-%m-%d_%H-%M-%S.pdf")), dest='F')
-    return os.path.join(save_dir, instant.strftime("%Y-%m-%d_%H-%M-%S.pdf"))
+    filename = instant.strftime("attestation-%Y-%m-%d_%H-%M-%S.pdf")
+    pdf.output(name=os.path.join(save_dir, filename), dest='F')
+    return os.path.join(save_dir, filename)
 
 if __name__ == "__main__":
     print(motifs_courts)

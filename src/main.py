@@ -17,10 +17,10 @@ else:
     from pathlib import Path
     data_dir = os.path.dirname(os.path.abspath(__file__))
     user_dir = Path.home()
-#import locale
-#locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+    import locale
+    locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
-__version__ = "0.9.5"
+__version__ = "0.9.8"
 
 
 class AttgenApp(App):
@@ -101,6 +101,12 @@ class AttgenApp(App):
 
     def on_stop(self):
         self.save_data()
+        
+    def on_pause(self):
+        self.save_data()
+        
+    def on_resume(self):
+        self.load_data()
 
 
 if __name__ == "__main__":

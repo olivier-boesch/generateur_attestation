@@ -98,10 +98,15 @@ class AttgenApp(App):
     def on_start(self):
         self.load_data()
         self.root.ids['motif'+str(self.data['motif_defaut'])].state = 'down'
-        Logger.info('Locales: '+str(locale.locale_alias))
 
     def on_stop(self):
         self.save_data()
+        
+    def on_pause(self):
+        self.save_data()
+        
+    def on_resume(self):
+        self.load_data()
 
 
 if __name__ == "__main__":

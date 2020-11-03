@@ -8,51 +8,52 @@ BoxLayout:
     cur_motif: 0
     Label:
         text: 'Générateur d\'attestation'
+        font_size: 20
     ToggleButton:
         id: motif0
         text: motifs_courts[0]
         group: "motif"
-        on_state: if self.state == 'down': root.cur_motif = 0
+        on_state: if self.state == 'down': root.cur_motif = '0'
     ToggleButton:
         id: motif1
         text: motifs_courts[1]
         group: "motif"
-        on_state: if self.state == 'down': root.cur_motif = 1
+        on_state: if self.state == 'down': root.cur_motif = '1'
     ToggleButton:
         id: motif2
         text: motifs_courts[2]
         group: "motif"
-        on_state: if self.state == 'down': root.cur_motif = 2
+        on_state: if self.state == 'down': root.cur_motif = '2'
     ToggleButton:
         id: motif3
         text: motifs_courts[3]
         group: "motif"
-        on_state: if self.state == 'down': root.cur_motif = 3
+        on_state: if self.state == 'down': root.cur_motif = '3'
     ToggleButton:
         id: motif4
         text: motifs_courts[4]
         group: "motif"
-        on_state: if self.state == 'down': root.cur_motif = 4
+        on_state: if self.state == 'down': root.cur_motif = '4'
     ToggleButton:
         id: motif5
         text: motifs_courts[5]
         group: "motif"
-        on_state: if self.state == 'down': root.cur_motif = 5
+        on_state: if self.state == 'down': root.cur_motif = '5'
     ToggleButton:
         id: motif6
         text: motifs_courts[6]
         group: "motif"
-        on_state: if self.state == 'down': root.cur_motif = 6
+        on_state: if self.state == 'down': root.cur_motif = '6'
     ToggleButton:
         id: motif7
         text: motifs_courts[7]
         group: "motif"
-        on_state: if self.state == 'down': root.cur_motif = 7
+        on_state: if self.state == 'down': root.cur_motif = '7'
     ToggleButton:
         id: motif8
         text: motifs_courts[8]
         group: "motif"
-        on_state: if self.state == 'down': root.cur_motif = 8
+        on_state: if self.state == 'down': root.cur_motif = '8'
     BoxLayout:
         orientation: 'horizontal'
         spacing: 5

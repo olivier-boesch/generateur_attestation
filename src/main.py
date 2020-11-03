@@ -72,7 +72,7 @@ class AttgenApp(App):
         Logger.info("Data: Saving data...")
         store = JsonStore(os.path.join(data_dir, 'data.json'))
         for k in self.data.keys():
-            store.put(k, val=self.data[k])
+            store.put(k, val=str(self.data[k]))
         Logger.info("Data: Saving data done")
 
     def generer_urgence(self):
@@ -83,9 +83,9 @@ class AttgenApp(App):
             ret = request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
         try:
             if not urgence:
-                motif = self.root.cur_motif
+                motif = int(self.root.cur_motif)
             else:
-                motif = self.data['motif_help']
+                motif = int(self.data['motif_help'])
             name = generer_pdf(save_dir=user_dir, data=self.data, motif=motif, urgence=urgence)
             if platform == 'android':
                 pass

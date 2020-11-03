@@ -98,7 +98,8 @@ class AttgenApp(App):
     def on_start(self):
         self.load_data()
         self.root.ids['motif'+str(self.data['motif_defaut'])].state = 'down'
-        loadingscreen.hide_loading_screen()
+        if platform == 'android':
+            loadingscreen.hide_loading_screen()
 
     def on_stop(self):
         self.save_data()

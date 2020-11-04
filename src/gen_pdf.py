@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from fpdf import FPDF
 import os.path
 from kivy import platform
+from kivy.logger import Logger
 
 title = "ATTESTATION DE DÉPLACEMENT DÉROGATOIRE"
 
@@ -58,6 +59,7 @@ class PDF(FPDF):
 
 def generer_pdf(save_dir, data, motif, urgence=False):
     instant = datetime.now()
+    Logger.info("Att: Génération le {:s} pour {:s} (urgence : {:s})".format(str(instant), motifs_courts[int(motif)], str(urgence)))
     if urgence:
         try:
             delta = int(data['decalage_help'])
@@ -75,6 +77,7 @@ def generer_pdf(save_dir, data, motif, urgence=False):
     data['date'] = date
     heure = instant.strftime("%H:%M")
     data['heure'] = heure
+    Logger.info("Att: Generated at {:s} on {:s}".format(heure, date))
     header = debut.format(**data)
     footer = fin.format(**data)
     pdf = PDF(orientation='P', unit="mm", format='A4')
@@ -87,17 +90,18 @@ def generer_pdf(save_dir, data, motif, urgence=False):
     pdf.ln()
     for i in range(len(motifs_longs)):
         if i == motif:
-            pdf.cell(w=5,h=5,border=1, txt="X")
+            pdf.cell(w=5, h=5, border=1, txt="X")
         else:
-            pdf.cell(w=5,h=5,border=1, txt=" ")
+            pdf.cell(w=5, h=5, border=1, txt=" ")
         pdf.set_x(30)
-        pdf.multi_cell(w=0,h=5,txt=motifs_longs[i])
+        pdf.multi_cell(w=0, h=5, txt=motifs_longs[i])
         pdf.ln()
     pdf.multi_cell(0, 5, footer)
     pdf.ln()
     filename = instant.strftime("attestation-%Y-%m-%d_%H-%M-%S.pdf")
     pdf.output(name=os.path.join(save_dir, filename), dest='F')
     return os.path.join(save_dir, filename)
+
 
 if __name__ == "__main__":
     print(motifs_courts)

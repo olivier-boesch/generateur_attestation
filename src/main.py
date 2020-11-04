@@ -10,7 +10,6 @@ from kivy import platform
 if platform == 'android':
     from android.permissions import request_permissions, Permission
     from android.storage import primary_external_storage_path, app_storage_path
-    from android import loadingscreen
     data_dir = app_storage_path()
     user_dir = primary_external_storage_path()
 else:
@@ -80,35 +79,29 @@ class AttgenApp(App):
 
     def generer(self, urgence=False):
         if platform == 'android':
-            ret = request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
         try:
             if not urgence:
                 motif = int(self.root.cur_motif)
             else:
                 motif = int(self.data['motif_help'])
             name = generer_pdf(save_dir=user_dir, data=self.data, motif=motif, urgence=urgence)
-            if platform == 'android':
-                pass
-            else:
+            if platform != 'android':
                 import webbrowser
                 webbrowser.open_new(os.path.join(user_dir, name))
         except PermissionError:
-            pass
+            Logger.warning('Att: Not been able to write on storage')
 
     def on_start(self):
         self.load_data()
         self.root.ids['motif'+str(self.data['motif_defaut'])].state = 'down'
-        if platform == 'android':
-            loadingscreen.hide_loading_screen()
 
     def on_stop(self):
         self.save_data()
         
     def on_pause(self):
         self.save_data()
-        
-    def on_resume(self):
-        self.load_data()
+        return True
 
 
 if __name__ == "__main__":

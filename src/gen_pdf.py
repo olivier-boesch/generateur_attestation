@@ -70,7 +70,7 @@ def generer_pdf(save_dir, data, motif, urgence=False):
         mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
                 'août', 'septembre', 'octobre', 'novembre', 'décembre']
         date = instant.strftime("%d ").lstrip('0')
-        date += mois[int(instant.strftime("%m"))]
+        date += mois[int(instant.strftime("%m"))-1]
         date += instant.strftime(" %Y")
     else:
         date = instant.strftime("%d %B %Y").lstrip('0')
